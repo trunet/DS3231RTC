@@ -1,0 +1,41 @@
+/* 
+#  Copyright (c) Wagner Sartori Junior 2011
+#  Copyright (c) Michael Margolis 2009
+#  This library is intended to be uses with Arduino Time.h library functions
+#
+#  This file is part of TrunetClock.
+#
+#  TrunetClock program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#
+#######################################
+# Syntax Coloring Map For DS3231RTC
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+get	KEYWORD2
+set KEYWORD2
+read KEYWORD2
+write KEYWORD2
+#######################################
+# Instances (KEYWORD2)
+#######################################
+RTC
+#######################################
+# Constants (LITERAL1)
+#######################################
