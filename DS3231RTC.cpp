@@ -57,33 +57,33 @@ void  DS3231RTC::set(time_t t)
 void DS3231RTC::read( tmElements_t &tm)
 {
   Wire.beginTransmission(DS3231_CTRL_ID);
-  Wire.send(0x00);
+  Wire.write((uint8_t)0);
   Wire.endTransmission();
 
   // request the 7 data fields   (secs, min, hr, dow, date, mth, yr)
   Wire.requestFrom(DS3231_CTRL_ID, tmNbrFields);
   
-  tm.Second = bcd2dec(Wire.receive() & 0x7f);   
-  tm.Minute = bcd2dec(Wire.receive() );
-  tm.Hour =   bcd2dec(Wire.receive() & 0x3f);  // mask assumes 24hr clock
-  tm.Wday = bcd2dec(Wire.receive() );
-  tm.Day = bcd2dec(Wire.receive() );
-  tm.Month = bcd2dec(Wire.receive() );
-  tm.Year = y2kYearToTm((bcd2dec(Wire.receive())));
+  tm.Second = bcd2dec(Wire.read() & 0x7f);   
+  tm.Minute = bcd2dec(Wire.read() );
+  tm.Hour =   bcd2dec(Wire.read() & 0x3f);  // mask assumes 24hr clock
+  tm.Wday = bcd2dec(Wire.read() );
+  tm.Day = bcd2dec(Wire.read() );
+  tm.Month = bcd2dec(Wire.read() );
+  tm.Year = y2kYearToTm((bcd2dec(Wire.read())));
 }
 
 void DS3231RTC::write(tmElements_t &tm)
 {
   Wire.beginTransmission(DS3231_CTRL_ID);
-  Wire.send(0x00); // reset register pointer
+  Wire.write((uint8_t)0); // reset register pointer
   
-  Wire.send(dec2bcd(tm.Second)) ;   
-  Wire.send(dec2bcd(tm.Minute));
-  Wire.send(dec2bcd(tm.Hour));      // sets 24 hour format
-  Wire.send(dec2bcd(tm.Wday));   
-  Wire.send(dec2bcd(tm.Day));
-  Wire.send(dec2bcd(tm.Month));
-  Wire.send(dec2bcd(tmYearToY2k(tm.Year)));   
+  Wire.write(dec2bcd(tm.Second)) ;   
+  Wire.write(dec2bcd(tm.Minute));
+  Wire.write(dec2bcd(tm.Hour));      // sets 24 hour format
+  Wire.write(dec2bcd(tm.Wday));   
+  Wire.write(dec2bcd(tm.Day));
+  Wire.write(dec2bcd(tm.Month));
+  Wire.write(dec2bcd(tmYearToY2k(tm.Year)));   
 
   Wire.endTransmission();  
 }
@@ -95,13 +95,13 @@ float DS3231RTC::getTemp()
 
   //temp registers (11h-12h) get updated automatically every 64s
   Wire.beginTransmission(DS3231_CTRL_ID);
-  Wire.send(0x11);
+  Wire.write(0x11);
   Wire.endTransmission();
   Wire.requestFrom(DS3231_CTRL_ID, 2);
   
   if(Wire.available()) {
-    tMSB = Wire.receive(); //2's complement int portion
-    tLSB = Wire.receive(); //fraction portion
+    tMSB = Wire.read(); //2's complement int portion
+    tLSB = Wire.read(); //fraction portion
     
     temp3231 = (tMSB & B01111111); //do 2's math on Tmsb
     temp3231 += ( (tLSB >> 6) * 0.25 ); //only care about bits 7 & 8
@@ -133,8 +133,8 @@ uint8_t DS3231RTC::bcd2dec(uint8_t num)
 
 void set_sreg(uint8_t val) {
 	Wire.beginTransmission(DS3231_CTRL_ID);
-	Wire.send(DS3231_STATUS_ADDR);
-	Wire.send(val);
+	Wire.write(DS3231_STATUS_ADDR);
+	Wire.write(val);
 	Wire.endTransmission();
 }
 
@@ -142,19 +142,19 @@ uint8_t get_sreg() {
 	uint8_t rv;
 
 	Wire.beginTransmission(DS3231_CTRL_ID);
-	Wire.send(DS3231_STATUS_ADDR);
+	Wire.write(DS3231_STATUS_ADDR);
 	Wire.endTransmission();
 
 	Wire.requestFrom(DS3231_CTRL_ID, 1);
-	rv = Wire.receive();
+	rv = Wire.read();
 
 	return rv;
 }
 
 void set_creg(uint8_t val) {
 	Wire.beginTransmission(DS3231_CTRL_ID);
-	Wire.send(DS3231_CONTROL_ADDR);
-	Wire.send(val);
+	Wire.write(DS3231_CONTROL_ADDR);
+	Wire.write(val);
 	Wire.endTransmission();
 }
 
@@ -162,11 +162,11 @@ uint8_t get_creg() {
 	uint8_t rv;
 
 	Wire.beginTransmission(DS3231_CTRL_ID);
-	Wire.send(DS3231_CONTROL_ADDR);
+	Wire.write(DS3231_CONTROL_ADDR);
 	Wire.endTransmission();
 
 	Wire.requestFrom(DS3231_CTRL_ID, 1);
-	rv = Wire.receive();
+	rv = Wire.read();
 
 	return rv;
 }
