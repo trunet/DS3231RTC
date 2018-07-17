@@ -29,9 +29,9 @@
 # Methods and Functions (KEYWORD2)
 #######################################
 get	KEYWORD2
-set KEYWORD2
-read KEYWORD2
-write KEYWORD2
+set	KEYWORD2
+read	KEYWORD2
+write	KEYWORD2
 #######################################
 # Instances (KEYWORD2)
 #######################################
