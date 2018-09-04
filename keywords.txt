@@ -1,4 +1,4 @@
-/* 
+#
 #  Copyright (c) Wagner Sartori Junior 2011
 #  Copyright (c) Michael Margolis 2009
 #  This library is intended to be uses with Arduino Time.h library functions
